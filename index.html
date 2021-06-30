@@ -36,8 +36,6 @@
               const rowTemplate = document.querySelector('#table-body-template');
               const tableBody = document.querySelector('tbody');
 
-
-
               Object.keys(data).forEach((key, index) => {
                 const newRow = rowTemplate.content.cloneNode(true);
                 const cells = newRow.querySelectorAll('td');
@@ -45,15 +43,16 @@
 
                 count.textContent = index + 1;
                 cells[0].textContent = key
-                cells[1].textContent = data[key][0].isActive
-                cells[2].textContent = data[key][1]?.isActive
-                cells[3].textContent = data[key][2]?.isActive
-                cells[4].textContent = data[key][3]?.isActive
+                cells[1].textContent = data[key].find(flag => flag.env === 'production')?.isActive
+                cells[2].textContent = data[key].find(flag => flag.env === 'staging')?.isActive
+                cells[3].textContent = data[key].find(flag => flag.env === 'dev')?.isActive
 
-                cells[1].className += data[key][0]?.isActive ? 'bg-success' : 'bg-danger';
-                cells[2].className += data[key][1]?.isActive ? 'bg-success' : 'bg-danger';
-                cells[3].className += data[key][2]?.isActive ? 'bg-success' : 'bg-danger';
-                cells[4].className += data[key][3]?.isActive ? 'bg-success' : 'bg-danger';
+                cells[1].className += data[key].find(flag => flag.env === 'production')?.isActive ? 'bg-success' : 'bg-danger';
+                cells[2].className += data[key].find(flag => flag.env === 'staging')?.isActive ? 'bg-success' : 'bg-danger';
+                cells[3].className += data[key].find(flag => flag.env === 'dev')?.isActive ? 'bg-success' : 'bg-danger';
+
+                data[key].length > 3 ? cells[4].className += 'bg-warning' : null;
+                cells[4].textContent = data[key].length > 3 ? 'something is no yes' : null;
 
                 tableBody.appendChild(newRow);
               });
@@ -74,7 +73,7 @@
                   <th scope="col">Prod</th>
                   <th scope="col">Stg</th>
                   <th scope="col">Dev</th>
-                  <th scope="col">Bonus</th>
+                  <th scope="col">Warning</th>
                 </tr  >
             </thead>
             <tbody id="table-body">

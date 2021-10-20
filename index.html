@@ -18,6 +18,7 @@
         window.addEventListener('load', () => {
           Promise.all([
             getFeatures('production'),
+            getFeatures('demo'),
             getFeatures('staging'),
             getFeatures('dev')
           ])
@@ -44,15 +45,17 @@
                 count.textContent = index + 1;
                 cells[0].textContent = key
                 cells[1].textContent = data[key].find(flag => flag.env === 'production')?.isActive
-                cells[2].textContent = data[key].find(flag => flag.env === 'staging')?.isActive
-                cells[3].textContent = data[key].find(flag => flag.env === 'dev')?.isActive
+                cells[2].textContent = data[key].find(flag => flag.env === 'demo')?.isActive
+                cells[3].textContent = data[key].find(flag => flag.env === 'staging')?.isActive
+                cells[4].textContent = data[key].find(flag => flag.env === 'dev')?.isActive
 
                 cells[1].className += data[key].find(flag => flag.env === 'production')?.isActive ? 'bg-success' : 'bg-danger';
-                cells[2].className += data[key].find(flag => flag.env === 'staging')?.isActive ? 'bg-success' : 'bg-danger';
-                cells[3].className += data[key].find(flag => flag.env === 'dev')?.isActive ? 'bg-success' : 'bg-danger';
+                cells[2].className += data[key].find(flag => flag.env === 'demo')?.isActive ? 'bg-success' : 'bg-danger';
+                cells[3].className += data[key].find(flag => flag.env === 'staging')?.isActive ? 'bg-success' : 'bg-danger';
+                cells[4].className += data[key].find(flag => flag.env === 'dev')?.isActive ? 'bg-success' : 'bg-danger';
 
-                data[key].length > 3 ? cells[4].className += 'bg-warning' : null;
-                cells[4].textContent = data[key].length > 3 ? 'something is no yes' : null;
+                data[key].length > 4 ? cells[5].className += 'bg-warning' : null;
+                cells[5].textContent = data[key].length > 4 ? 'something is no yes' : null;
 
                 tableBody.appendChild(newRow);
               });
@@ -71,6 +74,7 @@
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
                   <th scope="col">Prod</th>
+                  <th scope="col">Demo</th>
                   <th scope="col">Stg</th>
                   <th scope="col">Dev</th>
                   <th scope="col">Warning</th>
@@ -84,6 +88,7 @@
 <template id="table-body-template">
   <tr>
     <th scope="row">1</th>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>
